@@ -1,0 +1,31 @@
+[project]
+name = "ecom-selection-multiagent-studio"
+version = "0.1.0"
+description = "跨境电商多 Agent 选品智能调研与人工审批工作台（可比竞品筛选 + 双路并行取证 + 证据审核重写 + HITL 挂起恢复 + 报告版本 Diff）"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "fastapi>=0.115.0",
+    "uvicorn[standard]>=0.32.0",
+    "pydantic>=2.9.0",
+    "pydantic-settings>=2.6.0",
+    "python-dotenv>=1.0.1",
+    "psycopg[binary]>=3.2.0",
+    "redis>=5.2.0",
+    "openai>=1.55.0",
+    "langgraph>=0.2.50",
+    "httpx>=0.27.2",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.3.0",
+    "ruff>=0.7.0",
+]
+
+[build-system]
+requires = ["setuptools>=68.0"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+where = ["src"]

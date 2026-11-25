@@ -1,0 +1,172 @@
+[
+  {
+    "item_id": "COMP-F01",
+    "title": "PurrFlow Pro 304不锈钢无线泵静音宠物饮水机 2.5L",
+    "category": "宠物饮水机",
+    "is_accessory": false,
+    "target_pets": ["猫", "小型犬"],
+    "price_usd": 45.99,
+    "monthly_sales_est": 2400,
+    "rating_avg": 4.6,
+    "specs": {"material": "304不锈钢", "capacity_l": 2.5, "pump": "无线磁感应", "noise_db": 25, "battery": false},
+    "reviews": [
+      {"review_id": "RF101", "rating": 5, "verified": true, "sentiment": "pos", "text": "放卧室床头几乎无声，无线水泵拆洗太爽了，不锈钢盘用三个月猫没长黑下巴。"},
+      {"review_id": "RF102", "rating": 3, "verified": true, "sentiment": "neg", "text": "硬水地区3周后叶轮结垢会变响，必须抠开泵盖刷；底座不防水，溅水会红灯停泵。"},
+      {"review_id": "RF103", "rating": 4, "verified": true, "sentiment": "neg", "text": "没有内置电池，小区停电就停水，好在水盘上还能存一点浅水应急。"}
+    ]
+  },
+  {
+    "item_id": "COMP-F02",
+    "title": "AquaPaw Stainless 2.2L 无线感应不锈钢猫咪饮水机",
+    "category": "宠物饮水机",
+    "is_accessory": false,
+    "target_pets": ["猫", "小型犬"],
+    "price_usd": 49.99,
+    "monthly_sales_est": 1850,
+    "rating_avg": 4.5,
+    "specs": {"material": "304不锈钢", "capacity_l": 2.2, "pump": "无线磁感应", "noise_db": 26, "battery": false},
+    "reviews": [
+      {"review_id": "RF201", "rating": 5, "verified": true, "sentiment": "pos", "text": "水盘和桶身可以直接进洗碗机，双猫3天加一次水，静音效果很好。"},
+      {"review_id": "RF202", "rating": 2, "verified": true, "sentiment": "neg", "text": "原装滤芯太贵，单片要2.5美元，而且没法用第三方平替，长期耗材成本高。"}
+    ]
+  },
+  {
+    "item_id": "COMP-F03",
+    "title": "MeowSpring Cordless 3.0L 电池无线续航不锈钢饮水机",
+    "category": "宠物饮水机",
+    "is_accessory": false,
+    "target_pets": ["猫", "小型犬"],
+    "price_usd": 62.99,
+    "monthly_sales_est": 1420,
+    "rating_avg": 4.7,
+    "specs": {"material": "304不锈钢", "capacity_l": 3.0, "pump": "无线感应+5000mAh电池", "noise_db": 24, "battery": true},
+    "reviews": [
+      {"review_id": "RF301", "rating": 5, "verified": true, "sentiment": "pos", "text": "真无线电池版可以随便摆客厅角落，完全不怕猫啃电源线，雷达感应出水猫很喜欢。"},
+      {"review_id": "RF302", "rating": 3, "verified": true, "sentiment": "neg", "text": "持续出水模式下电池只能撑5天，只有改间歇感应模式才能撑30天；价格偏贵。"}
+    ]
+  },
+  {
+    "item_id": "COMP-F04",
+    "title": "PurrFlow Lite 1.8L 透明塑料基础款宠物饮水机",
+    "category": "宠物饮水机",
+    "is_accessory": false,
+    "target_pets": ["猫"],
+    "price_usd": 22.99,
+    "monthly_sales_est": 3100,
+    "rating_avg": 4.1,
+    "specs": {"material": "PP塑料", "capacity_l": 1.8, "pump": "有线潜水泵", "noise_db": 34, "battery": false},
+    "reviews": [
+      {"review_id": "RF401", "rating": 2, "verified": true, "sentiment": "neg", "text": "塑料机身容易发滑长黑下巴，晚上低频嗡嗡响不能放卧室，洗水泵得抠电线很麻烦。"}
+    ]
+  },
+  {
+    "item_id": "COMP-F-ACC1",
+    "title": "PurrFlow 静音不锈钢宠物饮水机专用六重替换滤芯 8片装",
+    "category": "宠物饮水机",
+    "is_accessory": true,
+    "target_pets": ["猫", "小型犬"],
+    "price_usd": 16.99,
+    "monthly_sales_est": 4200,
+    "rating_avg": 4.7,
+    "specs": {"pack_count": 8},
+    "reviews": [
+      {"review_id": "RF901", "rating": 5, "verified": true, "sentiment": "pos", "text": "滤芯性价比不错，泡5分钟冲掉炭粉再装。"}
+    ]
+  },
+  {
+    "item_id": "COMP-F-ACC2",
+    "title": "宠物饮水机通用替换静音水泵（USB接口）",
+    "category": "宠物饮水机",
+    "is_accessory": true,
+    "target_pets": ["猫"],
+    "price_usd": 12.99,
+    "monthly_sales_est": 950,
+    "rating_avg": 4.4,
+    "specs": {"voltage": "5V"},
+    "reviews": []
+  },
+  {
+    "item_id": "COMP-F-BAD",
+    "title": "无品牌宠物自动饮水器",
+    "category": "宠物饮水机",
+    "is_accessory": false,
+    "target_pets": [],
+    "price_usd": null,
+    "monthly_sales_est": null,
+    "rating_avg": null,
+    "specs": {},
+    "reviews": []
+  },
+  {
+    "item_id": "COMP-L01",
+    "title": "PawNest OpenAir 65L 开放式双防夹全自动智能猫砂盆",
+    "category": "智能猫砂盆",
+    "is_accessory": false,
+    "target_pets": ["猫"],
+    "price_usd": 299.00,
+    "monthly_sales_est": 680,
+    "rating_avg": 4.5,
+    "specs": {"structure": "开放式", "volume_l": 65, "safety": "红外+重力双防夹", "max_cat_kg": 8.0},
+    "reviews": [
+      {"review_id": "RL101", "rating": 5, "verified": true, "sentiment": "pos", "text": "开放式完全不卡猫，红外重力1秒刹停，集便仓可用普通抽绳袋不绑定天价耗材。"},
+      {"review_id": "RL102", "rating": 3, "verified": true, "sentiment": "neg", "text": "超过8kg的缅因猫略挤；3mm粗条豆腐砂会被误铲，只能用细条混合砂或膨润土。"}
+    ]
+  },
+  {
+    "item_id": "COMP-L02",
+    "title": "CatGlobe Max 70L 封闭滚筒式全自动除臭猫砂盆",
+    "category": "智能猫砂盆",
+    "is_accessory": false,
+    "target_pets": ["猫"],
+    "price_usd": 389.00,
+    "monthly_sales_est": 920,
+    "rating_avg": 4.4,
+    "specs": {"structure": "封闭滚筒式", "volume_l": 70, "safety": "雷达+霍尔防夹", "max_cat_kg": 9.0},
+    "reviews": [
+      {"review_id": "RL201", "rating": 5, "verified": true, "sentiment": "pos", "text": "封闭式锁臭效果很强，带负离子除臭模块，放小户型客厅基本闻不到味。"},
+      {"review_id": "RL202", "rating": 2, "verified": true, "sentiment": "neg", "text": "拆洗滚筒极其费劲，软便糊在内壁硅胶垫缝里很难刷；原厂除臭块很贵。"}
+    ]
+  },
+  {
+    "item_id": "COMP-L03",
+    "title": "ScoopEase Smart 60L 开放平推式自动铲屎猫砂盆",
+    "category": "智能猫砂盆",
+    "is_accessory": false,
+    "target_pets": ["猫"],
+    "price_usd": 239.00,
+    "monthly_sales_est": 510,
+    "rating_avg": 4.2,
+    "specs": {"structure": "开放平推式", "volume_l": 60, "safety": "红外防夹", "max_cat_kg": 7.5},
+    "reviews": [
+      {"review_id": "RL301", "rating": 3, "verified": true, "sentiment": "neg", "text": "价格亲民，但平推耙齿在软便时容易粘便且清理声音偏大，集便盒偏小2天就满。"},
+      {"review_id": "RL302", "rating": 4, "verified": true, "sentiment": "pos", "text": "开放设计老猫和胖猫容易适应，不会拒进。"}
+    ]
+  },
+  {
+    "item_id": "COMP-L-ACC1",
+    "title": "智能猫砂盆专用加厚抽绳集便垃圾袋 60只装",
+    "category": "智能猫砂盆",
+    "is_accessory": true,
+    "target_pets": ["猫"],
+    "price_usd": 14.99,
+    "monthly_sales_est": 2600,
+    "rating_avg": 4.8,
+    "specs": {"pack_count": 60},
+    "reviews": []
+  },
+  {
+    "item_id": "COMP-D01",
+    "title": "FluffDry 62L 静音恒温宠物智能烘干箱",
+    "category": "宠物烘干箱",
+    "is_accessory": false,
+    "target_pets": ["猫", "小型犬"],
+    "price_usd": 329.00,
+    "monthly_sales_est": 190,
+    "rating_avg": 4.6,
+    "specs": {"volume_l": 62, "noise_db": 40, "temp_control": "38.5℃恒温NTC双探头"},
+    "reviews": [
+      {"review_id": "RD101", "rating": 5, "verified": true, "sentiment": "pos", "text": "比吹风机安静很多，洗完澡35分钟吹干布偶猫肚子，带侧边撸猫安抚窗口。"},
+      {"review_id": "RD102", "rating": 3, "verified": true, "sentiment": "neg", "text": "占地面积太大，租房党放不下；且目前全网竞品不多，售后维修点少。"}
+    ]
+  }
+]

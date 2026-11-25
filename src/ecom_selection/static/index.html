@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>跨境电商多 Agent 选品调研与人工审批工作台</title>
+  <style>
+    :root { --bg:#f5f7fb; --card:#fff; --border:#e5e7eb; --text:#111827; --muted:#6b7280; --primary:#2563eb; }
+    * { box-sizing:border-box; }
+    body { margin:0; font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif; background:var(--bg); color:var(--text); line-height:1.6; }
+    header { background:#0f172a; color:#f8fafc; padding:14px 24px; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:12px; }
+    header h1 { margin:0; font-size:18px; }
+    header span { font-size:12px; color:#94a3b8; }
+    .pill { display:inline-flex; align-items:center; gap:6px; padding:4px 10px; border-radius:999px; font-size:12px; background:rgba(255,255,255,0.1); }
+    .dot { width:8px; height:8px; border-radius:50%; background:#22c55e; }
+    .link { color:#cbd5e1; text-decoration:none; font-size:12px; border:1px solid rgba(255,255,255,0.2); padding:5px 10px; border-radius:6px; margin-left:6px; }
+    main { max-width:1420px; margin:20px auto; padding:0 20px 40px; display:grid; grid-template-columns:360px 1fr; gap:20px; align-items:start; }
+    @media (max-width:980px) { main { grid-template-columns:1fr; } }
+    .card { background:var(--card); border:1px solid var(--border); border-radius:12px; padding:18px; box-shadow:0 1px 3px rgba(0,0,0,0.04); margin-bottom:16px; }
+    .card h2 { margin:0 0 12px; font-size:15px; }
+    label { display:block; font-size:13px; font-weight:600; margin-bottom:5px; }
+    input[type="text"], textarea, select { width:100%; border:1px solid #d1d5db; border-radius:8px; padding:8px 10px; font-size:13px; font-family:inherit; margin-bottom:10px; }
+    .chk { display:flex; align-items:center; gap:8px; font-size:12px; font-weight:400; margin-bottom:8px; }
+    .btn { border:none; border-radius:8px; padding:9px 14px; font-size:13px; font-weight:600; cursor:pointer; }
+    .btn-primary { background:var(--primary); color:#fff; width:100%; }
+    .btn-primary:disabled { background:#93c5fd; }
+    .btn-green { background:#059669; color:#fff; }
+    .btn-amber { background:#d97706; color:#fff; }
+    .btn-red { background:#dc2626; color:#fff; }
+    .btn-outline { background:#fff; border:1px solid #d1d5db; color:#374151; }
+    .preset { width:100%; text-align:left; background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px; padding:8px 10px; margin-bottom:8px; cursor:pointer; font-size:12px; }
+    .preset:hover { border-color:var(--primary); background:#eff6ff; }
+    .tag { display:inline-block; font-size:11px; font-weight:600; padding:2px 8px; border-radius:999px; margin-right:5px; }
+    .t-blue { background:#eff6ff; color:#1d4ed8; }
+    .t-green { background:#ecfdf5; color:#047857; }
+    .t-amber { background:#fffbeb; color:#b45309; }
+    .t-red { background:#fef2f2; color:#b91c1c; }
+    .hitl-box { background:#fffbeb; border:2px solid #f59e0b; border-radius:10px; padding:14px; margin:12px 0; }
+    .report-box { background:#f8fafc; border:1px solid #e2e8f0; border-radius:10px; padding:16px; white-space:pre-wrap; font-size:14px; }
+    .diff-box { background:#0f172a; color:#e2e8f0; border-radius:8px; padding:12px; font-family:Consolas,monospace; font-size:12px; overflow-x:auto; white-space:pre; }
+    .diff-add { color:#4ade80; }
+    .diff-del { color:#f87171; }
+    .timings { display:grid; grid-template-columns:repeat(auto-fit, minmax(125px, 1fr)); gap:8px; margin:12px 0; }
+    .t-item { background:#f9fafb; border:1px solid var(--border); border-radius:8px; padding:6px 10px; }
+    .t-item span { display:block; font-size:11px; color:var(--muted); }
+    .t-item strong { font-size:13px; }
+    .task-row { display:flex; justify-content:space-between; align-items:center; padding:7px 8px; border-bottom:1px solid #f3f4f6; cursor:pointer; font-size:12px; }
+    .task-row:hover { background:#eff6ff; }
+    details { margin-top:10px; border:1px solid var(--border); border-radius:8px; padding:10px; }
+    summary { cursor:pointer; font-size:13px; font-weight:600; }
+  </style>
+</head>
+<body>
+  <header>
+    <div>
+      <h1>跨境电商多 Agent 选品调研与人工审批工作台</h1>
+      <span>可比竞品筛选 · 市场 & 用户双 Agent 并行取证 · 证据审核重写 · Human-in-the-Loop 审批 · 版本 Diff 导出</span>
+    </div>
+    <div>
+      <span class="pill"><span class="dot"></span><span id="healthText">检查中...</span></span>
+      <a class="link" id="lfLink" href="http://192.168.150.130:3000" target="_blank">Langfuse 看板</a>
+      <a class="link" href="/docs" target="_blank">API 文档</a>
+    </div>
+  </header>
+
+  <main>
+    <section>
+      <div class="card">
+        <h2>发起新品选品调研</h2>
+        <label>拟调研新品方向</label>
+        <input type="text" id="topicInput" value="无线泵静音不锈钢宠物饮水机 2.5L" />
+        <label>目标宠物</label>
+        <select id="petSelect">
+          <option value="猫">猫</option>
+          <option value="小型犬">小型犬</option>
+        </select>
+        <label class="chk"><input type="checkbox" id="hitlChk" checked /> 上架定稿前挂起人工审批门禁（Human-in-the-Loop）</label>
+        <label class="chk"><input type="checkbox" id="badDraftChk" /> 演示：强制首稿违规（触发证据审核打回重写 + V1/V2 Diff）</label>
+        <button class="btn btn-primary" id="startBtn" onclick="startTask()">启动多 Agent 选品调研</button>
+      </div>
+
+      <div class="card">
+        <h2>一键演示 3 大核心场景</h2>
+        <button class="preset" onclick="quickRun('无线泵静音不锈钢宠物饮水机 2.5L', true, false)">
+          <span class="tag t-green">标准多 Agent 调研</span><br/>排除 2 款滤芯/水泵配件 + 1 款脏数据，双路并行取证
+        </button>
+        <button class="preset" onclick="quickRun('宠物智能恒温烘干箱', false, false)">
+          <span class="tag t-amber">样本缺口自动挂起 HITL</span><br/>仅 1 款可比竞品 → 自动触发缺口告警并挂起人工审批
+        </button>
+        <button class="preset" onclick="quickRun('开放式防夹全自动智能猫砂盆', true, true)">
+          <span class="tag t-red">审稿打回重写 + Diff 对比</span><br/>首稿注入伪造引用与 $999 幻觉报价 → 自动打回重写修复
+        </button>
+      </div>
+
+      <div class="card">
+        <h2>历史调研任务（支持追溯与版本对比）</h2>
+        <div id="taskList" style="color:#6b7280;font-size:12px;">加载中...</div>
+      </div>
+    </section>
+
+    <section id="detailArea">
+      <div class="card" style="text-align:center;padding:52px 20px;color:#6b7280;">
+        <h3 style="color:#374151;margin:0 0 8px;">请选择左侧场景启动调研，或点击历史任务查看评审详情</h3>
+        <p style="margin:0;">支持查看竞品入选/排除依据、市场统计与买家评论分离证据、V1→V2 报告 Diff、人工审批恢复与 Markdown 导出。</p>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const STATUS_MAP = {
+      running: ["运行中", "t-blue"],
+      awaiting_human_review: ["待运营人工审批 (HITL 挂起)", "t-amber"],
+      approved: ["已审批定稿", "t-green"],
+      rejected: ["已驳回立项", "t-red"]
+    };
+
+    function esc(s) {
+      return String(s ?? "").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
+    }
+
+    function renderDiff(diffText) {
+      if (!diffText) return "";
+      const lines = diffText.split("\n").map(line => {
+        if (line.startsWith("+") && !line.startsWith("+++")) return `<span class="diff-add">${esc(line)}</span>`;
+        if (line.startsWith("-") && !line.startsWith("---")) return `<span class="diff-del">${esc(line)}</span>`;
+        return esc(line);
+      }).join("\n");
+      return `<details open><summary>报告版本修改对比（Unified Diff）</summary><div class="diff-box">${lines}</div></details>`;
+    }
+
+    async function loadHealth() {
+      try {
+        const d = await (await fetch("/health")).json();
+        document.getElementById("healthText").textContent =
+          `在线 · ${d.tasks} 个调研任务 / ${d.report_versions} 份报告版本 · Redis ${d.redis ? "在线" : "离线"}`;
+        if (d.langfuse_url) document.getElementById("lfLink").href = d.langfuse_url;
+      } catch {
+        document.getElementById("healthText").textContent = "服务检查失败";
+      }
+    }
+
+    async function loadTasks() {
+      try {
+        const d = await (await fetch("/api/v1/tasks")).json();
+        const items = d.items || [];
+        const el = document.getElementById("taskList");
+        if (!items.length) { el.textContent = "暂无历史任务"; return; }
+        el.innerHTML = items.map(t => {
+          const [lbl, cls] = STATUS_MAP[t.status] || [t.status, "t-blue"];
+          return `<div class="task-row" onclick="openTask('${t.task_id}')">
+            <div><strong>${esc(t.topic)}</strong><br/><span style="color:#9ca3af;">${t.task_id} · 重写 ${t.rewrite_count} 次</span></div>
+            <span class="tag ${cls}">${lbl}</span>
+          </div>`;
+        }).join("");
+      } catch {}
+    }
+
+    async function openTask(taskId) {
+      const d = await (await fetch(`/api/v1/tasks/${taskId}`)).json();
+      renderTask(d);
+    }
+
+    function renderTask(t) {
+      const [stLabel, stCls] = STATUS_MAP[t.status] || [t.status, "t-blue"];
+      const versions = t.versions || [];
+      const latest = versions[versions.length - 1] || {};
+      const scr = t.screening || {};
+      const tm = t.node_timings || {};
+
+      const gapsHtml = (t.coverage_gaps || []).length
+        ? `<div style="background:#fef2f2;border:1px solid #fecaca;color:#b91c1c;padding:10px 12px;border-radius:8px;font-size:13px;margin:10px 0;">
+             <strong>⚠️ 样本覆盖缺口预警：</strong><ul style="margin:4px 0 0;padding-left:18px;">${t.coverage_gaps.map(g => `<li>${esc(g)}</li>`).join("")}</ul>
+           </div>`
+        : "";
+
+      const hitlHtml = t.status === "awaiting_human_review"
+        ? `<div class="hitl-box">
+             <strong>🧑‍💼 Human-in-the-Loop 人工审批门禁已挂起</strong>
+             <p style="margin:4px 0 8px;font-size:12px;color:#92400e;">请运营核对下方报告草稿与原始证据，可直接批准发布、附批注要求决策 Agent 修订重写，或驳回立项：</p>
+             <textarea id="humanNoteInput" rows="2" placeholder="输入人工审批批注（例如：请重点补充 45-55 美元价格带毛利测算和硬水结垢说明书提醒）"></textarea>
+             <div style="display:flex;gap:8px;flex-wrap:wrap;">
+               <button class="btn btn-green" onclick="submitReview('${t.task_id}', 'approve')">✅ 审批通过发布</button>
+               <button class="btn btn-amber" onclick="submitReview('${t.task_id}', 'revise')">✏️ 附批注重写并生成 Diff</button>
+               <button class="btn btn-red" onclick="submitReview('${t.task_id}', 'reject')">❌ 驳回立项</button>
+             </div>
+           </div>`
+        : (t.human_note ? `<div style="font-size:12px;color:#047857;margin:8px 0;"><strong>人工审批批注：</strong>${esc(t.human_note)}</div>` : "");
+
+      const timingHtml = Object.entries(tm).map(([k, v]) => `<div class="t-item"><span>${esc(k)}</span><strong>${v} ms</strong></div>`).join("");
+
+      document.getElementById("detailArea").innerHTML = `
+        <div class="card">
+          <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;">
+            <div>
+              <h2 style="margin:0;">${esc(t.topic)}</h2>
+              <div style="margin-top:6px;">
+                <span class="tag ${stCls}">${stLabel}</span>
+                <span class="tag t-blue">任务ID: ${esc(t.task_id)}</span>
+                <span class="tag t-green">可比竞品 ${scr.comparable_count ?? 0} 款（已排除配件/脏数据 ${scr.excluded_count ?? 0} 款）</span>
+                <span class="tag t-blue">版本数: ${versions.length} · 自动重写: ${t.rewrite_count} 次</span>
+                <span class="tag t-blue">Token: ${t.total_prompt_tokens} / ${t.total_completion_tokens}</span>
+              </div>
+            </div>
+            <a class="btn btn-outline" href="/api/v1/tasks/${t.task_id}/export" style="text-decoration:none;">⬇️ 导出 Markdown 报告</a>
+          </div>
+
+          ${gapsHtml}
+          ${hitlHtml}
+
+          <div class="timings">${timingHtml}</div>
+
+          <h3 style="font-size:14px;margin:14px 0 8px;">最新选品评审报告（V${latest.version_no || 1} · ${esc(latest.stage_label || "")}）</h3>
+          <div class="report-box">${esc(latest.markdown_content || "")}</div>
+
+          ${renderDiff(t.latest_diff)}
+
+          <details>
+            <summary>① 可比竞品入选 / 排除审计清单（入选 ${scr.comparable_count ?? 0} / 排除 ${scr.excluded_count ?? 0}）</summary>
+            <p style="font-size:12px;font-weight:600;margin:8px 0 4px;color:#047857;">入选主商品：</p>
+            <ul style="font-size:12px;margin:0;padding-left:18px;">${(scr.comparable || []).map(c => `<li><strong>${esc(c.item_id)}</strong> ${esc(c.title)}（分值 ${c.score}）— ${esc(c.reason)}</li>`).join("")}</ul>
+            <p style="font-size:12px;font-weight:600;margin:8px 0 4px;color:#b91c1c;">已排除配件 / 脏条目：</p>
+            <ul style="font-size:12px;margin:0;padding-left:18px;">${(scr.excluded || []).map(c => `<li><strong>${esc(c.item_id)}</strong> ${esc(c.title)} — ${esc(c.reason)}</li>`).join("")}</ul>
+          </details>
+
+          <details>
+            <summary>② 市场结构化统计证据池（共 ${(t.market_evidence || []).length} 条 · [M*]）</summary>
+            <ul style="font-size:12px;margin:8px 0 0;padding-left:18px;">${(t.market_evidence || []).map(e => `<li><strong>[${esc(e.id)}]</strong> ${esc(e.fact)}</li>`).join("")}</ul>
+          </details>
+
+          <details>
+            <summary>③ 可比竞品买家评论证据池（共 ${(t.user_evidence || []).length} 条 · [R*]）</summary>
+            <ul style="font-size:12px;margin:8px 0 0;padding-left:18px;">${(t.user_evidence || []).map(e => `<li><strong>[${esc(e.id)}]</strong> (${esc(e.item_id)} · ${e.rating}星) ${esc(e.text)}</li>`).join("")}</ul>
+          </details>
+        </div>
+      `;
+    }
+
+    function quickRun(topic, requireHitl, forceBad) {
+      document.getElementById("topicInput").value = topic;
+      document.getElementById("hitlChk").checked = requireHitl;
+      document.getElementById("badDraftChk").checked = forceBad;
+      startTask();
+    }
+
+    async function startTask() {
+      const topic = document.getElementById("topicInput").value.trim();
+      const target_pet = document.getElementById("petSelect").value;
+      const require_human_gate = document.getElementById("hitlChk").checked;
+      const force_bad_draft_once = document.getElementById("badDraftChk").checked;
+      const btn = document.getElementById("startBtn");
+      if (topic.length < 2) return alert("请输入调研主题");
+      btn.disabled = true; btn.textContent = "多 Agent 并行调研与审核中...";
+      document.getElementById("detailArea").innerHTML = `<div class="card" style="text-align:center;padding:44px;color:#6b7280;">正在执行：可比竞品筛选 → 市场 & 用户洞察双 Agent 并行取证 → 运营决策草稿 → 证据审核...</div>`;
+      try {
+        const r = await fetch("/api/v1/tasks", {
+          method: "POST",
+          headers: {"Content-Type": "application/json"},
+          body: JSON.stringify({topic, target_pet, require_human_gate, force_bad_draft_once})
+        });
+        const d = await r.json();
+        if (!r.ok) throw new Error(d.detail || "创建任务失败");
+        renderTask(d);
+        loadTasks();
+        loadHealth();
+      } catch (e) {
+        document.getElementById("detailArea").innerHTML = `<div class="card" style="color:#b91c1c;">执行失败：${esc(e.message)}</div>`;
+      } finally {
+        btn.disabled = false; btn.textContent = "启动多 Agent 选品调研";
+      }
+    }
+
+    async function submitReview(taskId, decision) {
+      const note = document.getElementById("humanNoteInput")?.value || "";
+      const r = await fetch(`/api/v1/tasks/${taskId}/review`, {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({decision, human_note: note})
+      });
+      const d = await r.json();
+      if (!r.ok) return alert(d.detail || "审批提交失败");
+      renderTask(d);
+      loadTasks();
+      loadHealth();
+    }
+
+    loadHealth();
+    loadTasks();
+  </script>
+</body>
+</html>
